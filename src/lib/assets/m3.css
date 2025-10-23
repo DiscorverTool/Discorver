@@ -1,0 +1,136 @@
+@import "m3-svelte/misc/styles.css";
+@import "m3-svelte/misc/recommended-styles.css";
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+  }
+  :root, ::backdrop {
+    --m3-scheme-background: 249 249 255;
+    --m3-scheme-on-background: 48 50 57;
+    --m3-scheme-surface: 249 249 255;
+    --m3-scheme-surface-dim: 216 217 227;
+    --m3-scheme-surface-bright: 249 249 255;
+    --m3-scheme-surface-container-lowest: 255 255 255;
+    --m3-scheme-surface-container-low: 242 243 252;
+    --m3-scheme-surface-container: 236 237 247;
+    --m3-scheme-surface-container-high: 230 232 241;
+    --m3-scheme-surface-container-highest: 225 226 235;
+    --m3-scheme-on-surface: 48 50 57;
+    --m3-scheme-on-surface-variant: 92 95 103;
+    --m3-scheme-outline: 120 122 130;
+    --m3-scheme-outline-variant: 176 178 186;
+    --m3-scheme-inverse-surface: 11 14 20;
+    --m3-scheme-inverse-on-surface: 154 157 165;
+    --m3-scheme-primary: 0 93 187;
+    --m3-scheme-primary-dim: 0 81 165;
+    --m3-scheme-on-primary: 248 248 255;
+    --m3-scheme-primary-container: 102 160 255;
+    --m3-scheme-on-primary-container: 0 34 75;
+    --m3-scheme-primary-fixed: 102 160 255;
+    --m3-scheme-primary-fixed-dim: 76 147 252;
+    --m3-scheme-on-primary-fixed: 0 0 0;
+    --m3-scheme-on-primary-fixed-variant: 0 43 93;
+    --m3-scheme-inverse-primary: 76 147 252;
+    --m3-scheme-secondary: 73 95 136;
+    --m3-scheme-secondary-dim: 61 83 123;
+    --m3-scheme-on-secondary: 248 248 255;
+    --m3-scheme-secondary-container: 215 227 255;
+    --m3-scheme-on-secondary-container: 59 82 121;
+    --m3-scheme-secondary-fixed: 215 227 255;
+    --m3-scheme-secondary-fixed-dim: 193 213 255;
+    --m3-scheme-on-secondary-fixed: 40 63 102;
+    --m3-scheme-on-secondary-fixed-variant: 69 92 132;
+    --m3-scheme-tertiary: 138 61 165;
+    --m3-scheme-tertiary-dim: 124 48 152;
+    --m3-scheme-on-tertiary: 255 247 251;
+    --m3-scheme-tertiary-container: 228 144 254;
+    --m3-scheme-on-tertiary-container: 84 0 111;
+    --m3-scheme-tertiary-fixed: 228 144 254;
+    --m3-scheme-tertiary-fixed-dim: 213 131 240;
+    --m3-scheme-on-tertiary-fixed: 45 0 62;
+    --m3-scheme-on-tertiary-fixed-variant: 95 11 124;
+    --m3-scheme-error: 187 27 27;
+    --m3-scheme-error-dim: 169 8 16;
+    --m3-scheme-on-error: 255 247 246;
+    --m3-scheme-error-container: 254 78 68;
+    --m3-scheme-on-error-container: 87 0 3;
+    --m3-scheme-shadow: 0 0 0;
+    --m3-scheme-scrim: 0 0 0;
+    --m3-scheme-on-on-primary: 0 93 186;
+    --m3-scheme-primary-container-subtle: 201 218 255;
+    --m3-scheme-on-primary-container-subtle: 0 75 153;
+    --m3-scheme-secondary-container-subtle: 201 218 255;
+    --m3-scheme-on-secondary-container-subtle: 54 77 116;
+    --m3-scheme-tertiary-container-subtle: 246 204 255;
+    --m3-scheme-on-tertiary-container-subtle: 117 40 145;
+    --m3-scheme-error-container-subtle: 255 207 201;
+    --m3-scheme-on-error-container-subtle: 158 0 11;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+  :root, ::backdrop {
+    --m3-scheme-background: 11 14 20;
+    --m3-scheme-on-background: 228 229 238;
+    --m3-scheme-surface: 11 14 20;
+    --m3-scheme-surface-dim: 11 14 20;
+    --m3-scheme-surface-bright: 41 44 51;
+    --m3-scheme-surface-container-lowest: 0 0 0;
+    --m3-scheme-surface-container-low: 16 19 26;
+    --m3-scheme-surface-container: 23 26 32;
+    --m3-scheme-surface-container-high: 29 32 38;
+    --m3-scheme-surface-container-highest: 35 38 44;
+    --m3-scheme-on-surface: 228 229 238;
+    --m3-scheme-on-surface-variant: 169 171 179;
+    --m3-scheme-outline: 115 117 125;
+    --m3-scheme-outline-variant: 69 72 79;
+    --m3-scheme-inverse-surface: 249 249 255;
+    --m3-scheme-inverse-on-surface: 82 85 92;
+    --m3-scheme-primary: 128 174 255;
+    --m3-scheme-primary-dim: 96 158 255;
+    --m3-scheme-on-primary: 0 45 97;
+    --m3-scheme-primary-container: 102 160 255;
+    --m3-scheme-on-primary-container: 0 34 75;
+    --m3-scheme-primary-fixed: 102 160 255;
+    --m3-scheme-primary-fixed-dim: 76 147 252;
+    --m3-scheme-on-primary-fixed: 0 0 0;
+    --m3-scheme-on-primary-fixed-variant: 0 43 93;
+    --m3-scheme-inverse-primary: 0 93 186;
+    --m3-scheme-secondary: 176 199 245;
+    --m3-scheme-secondary-dim: 163 185 230;
+    --m3-scheme-on-secondary: 41 64 103;
+    --m3-scheme-secondary-container: 36 59 97;
+    --m3-scheme-on-secondary-container: 169 192 237;
+    --m3-scheme-secondary-fixed: 215 227 255;
+    --m3-scheme-secondary-fixed-dim: 193 213 255;
+    --m3-scheme-on-secondary-fixed: 40 63 102;
+    --m3-scheme-on-secondary-fixed-variant: 69 92 132;
+    --m3-scheme-tertiary: 235 164 255;
+    --m3-scheme-tertiary-dim: 228 144 254;
+    --m3-scheme-on-tertiary: 96 14 125;
+    --m3-scheme-tertiary-container: 228 144 254;
+    --m3-scheme-on-tertiary-container: 84 0 111;
+    --m3-scheme-tertiary-fixed: 228 144 254;
+    --m3-scheme-tertiary-fixed-dim: 213 131 240;
+    --m3-scheme-on-tertiary-fixed: 45 0 62;
+    --m3-scheme-on-tertiary-fixed-variant: 95 11 124;
+    --m3-scheme-error: 255 113 100;
+    --m3-scheme-error-dim: 218 52 46;
+    --m3-scheme-on-error: 74 0 2;
+    --m3-scheme-error-container: 172 12 18;
+    --m3-scheme-on-error-container: 255 184 176;
+    --m3-scheme-shadow: 0 0 0;
+    --m3-scheme-scrim: 0 0 0;
+    --m3-scheme-on-on-primary: 128 174 255;
+    --m3-scheme-primary-container-subtle: 0 43 93;
+    --m3-scheme-on-primary-container-subtle: 123 171 255;
+    --m3-scheme-secondary-container-subtle: 19 44 81;
+    --m3-scheme-on-secondary-container-subtle: 149 172 216;
+    --m3-scheme-tertiary-container-subtle: 77 0 102;
+    --m3-scheme-on-tertiary-container-subtle: 222 139 248;
+    --m3-scheme-error-container-subtle: 96 0 4;
+    --m3-scheme-on-error-container-subtle: 255 137 125;
+  }
+}
