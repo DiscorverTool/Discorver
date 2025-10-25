@@ -11,7 +11,7 @@
 
 <center>
     <div class="wordmark">
-        <img src={Wordmark} alt="Discorver Wordmark" />
+        <img src={Wordmark} alt="Discorver Wordmark" fetchpriority=high />
     </div>
     <h1>Welcome to Discorver</h1>
     <p>
@@ -38,6 +38,16 @@
             "User Lookup",
             "Find information about a Discord user by their ID.",
             "/user"
+        )}
+        {@render tool(
+            "Invite Resolver",
+            "Get detailed information about a Discord invite link.",
+            "/invite"
+        )}
+        {@render tool(
+            "You",
+            "View information (and stats) about your own Discord account.",
+            "/self"
         )}
     </div>
 </center>

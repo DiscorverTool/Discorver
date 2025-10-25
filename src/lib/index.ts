@@ -1,21 +1,23 @@
 import { browser } from '$app/environment'
-import { PUBLIC_OAUTH_URL } from '$env/static/public';
+import { page } from '$app/state';
 
 export function getAccessToken(): {token: string, token_type: string, expires_at: number} {
     if (browser) {
+		if (page.url.searchParams.get('bounce') == 'login') {
+			alert('It seems you got stuck in a login loop. Click OK to return to the homepage.');
+			window.location.href = '/';
+			
+			return {
+				token: 'NONE',
+				token_type: 'NONE',
+				expires_at: 0
+			}
+		}
+
         if (localStorage.getItem('accessToken')) {
 			return JSON.parse(localStorage.getItem('accessToken')!);
 		} else {
-			const oauthURL = new URL(PUBLIC_OAUTH_URL);
-			
-			// If otherwise specified, don't annoy people with login prompts
-			if (!oauthURL.searchParams.has('prompt'))
-				oauthURL.searchParams.set('prompt', 'none');
-
-			// We don't want to need a fancy server-side route for this
-			oauthURL.searchParams.set('response_type', 'token');
-
-			window.location.href = oauthURL.toString();
+			window.location.href = '/api/oauth/login?ref=' + encodeURIComponent(window.location.href);
 		}
     }
 
@@ -28,6 +30,10 @@ export function getAccessToken(): {token: string, token_type: string, expires_at
 }
 
 export async function fetchWithCache(url: string, options: RequestInit = {}, cacheDuration: number = 300_000): Promise<Response> {
+	if (!browser) {
+		return fetch(url, options); // No caching on server-side, because SSR is cringe
+	}
+
 	const cacheKey = `fetchCache_${btoa(url + JSON.stringify(options))}`;
 	const cached = sessionStorage.getItem(cacheKey);
 	if (cached) {

@@ -3,11 +3,12 @@
     import iconTick from "@ktibow/iconset-material-symbols/check-circle-outline";
     import iconCross from "@ktibow/iconset-material-symbols/cancel-outline";
     import iconHelp from "@ktibow/iconset-material-symbols/help-outline";
-    import { getUserFlags, type User } from "./types";
+    import { getUserFlags, USER_FLAGS, type User } from "./types";
     import { browser } from "$app/environment";
     import { convertSnowflakeToDate } from "$lib";
 
     export let user: User | null;
+    export let style = '';
 
     let bannerType = 'gif';
     let platform = 'desktop';
@@ -49,7 +50,7 @@
 {/if}
 
 <div class="user-card">
-    <Card variant="filled">
+    <Card variant="filled" {style}>
         {#if user}
             <div class="basic-info">
                 {#if user.banner}
@@ -76,21 +77,7 @@
             <div class="details">
                 <p><strong>Discriminator:</strong> {user.discriminator === '0' ? 'N/A' : user.discriminator}</p>
                 <div class="user-flags">
-                    <p><strong>User Flags: <Icon icon={iconHelp} onclick={() => showUserFlagsHelp = true} style="cursor: pointer;" /></strong></p>
-                    {#if getUserFlags(user.flags).length > 0}
-                        <ul>
-                            {#each getUserFlags(user.flags) as flag}
-                                <li>
-                                    <strong>{flag.name}:</strong> {flag.description}
-                                    {#if !flag.isPublic}
-                                        <span class="private-flag">(Private)</span>
-                                    {/if}
-                                </li>
-                            {/each}
-                        </ul>
-                    {:else}
-                        <p class="no-flags">No flags set</p>
-                    {/if}
+                    <p style="display: flex; align-items:center;"><strong>User Flags</strong>: {user.flags}<Icon icon={iconHelp} onclick={() => showUserFlagsHelp = true} style="cursor: pointer; margin-left: 4px;" /></p>
                 </div>
                 <div class="align-vertical" style="gap: .5rem;">
                     Bot: {#if user.bot}
@@ -191,7 +178,7 @@
         font-family: Roboto, sans-serif;
     }
 
-    .user-flags ul {
+    /* .user-flags ul {
         margin: 8px 0;
         padding-left: 20px;
     }
@@ -211,7 +198,7 @@
         font-style: italic;
         color: var(--m3-scheme-on-surface-variant);
         margin: 8px 0;
-    }
+    } */
 
     .align-vertical {
         display: flex;

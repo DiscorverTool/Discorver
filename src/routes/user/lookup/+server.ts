@@ -1,6 +1,7 @@
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import {env} from '$env/dynamic/private';
+import { validateSnowflake } from '$lib';
 
 export const GET: RequestHandler = async({ url }) => {
 	const token = env.DISCORD_TOKEN;
@@ -10,6 +11,12 @@ export const GET: RequestHandler = async({ url }) => {
     const userId = url.searchParams.get('id');
     if (!userId) {
         throw error(400, 'User ID is required');
+    }
+
+    try {
+        validateSnowflake(userId);
+    } catch (e) {
+        throw error(400, 'User ID is not a valid snowflake');
     }
 
     const response = await fetch(`https://discord.com/api/v10/users/${userId}`, {

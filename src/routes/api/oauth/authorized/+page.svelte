@@ -6,6 +6,8 @@
         const accessToken = params.get("access_token") ?? "";
         const tokenType = params.get("token_type") ?? "";
         const expiresIn = params.get("expires_in") ?? "0";
+        const state = JSON.parse(atob(params.get("state") || btoa(JSON.stringify({referrer: '/'}))));
+        const referrer = new URL(state.referrer);
 
         if (!accessToken || !tokenType || !expiresIn) {
             alert(
@@ -22,7 +24,8 @@
             );
         }
 
-        window.location.href = "/";
+        referrer.searchParams.set('result', 'authorized');
+        window.location.href = referrer.toString();
     });
 </script>
 

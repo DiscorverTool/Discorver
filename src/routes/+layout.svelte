@@ -6,22 +6,33 @@
 	import iconPersonS from "@ktibow/iconset-material-symbols/person";
 	import iconPersonSearch from "@ktibow/iconset-material-symbols/person-search-outline";
 	import iconPersonSearchS from "@ktibow/iconset-material-symbols/person-search";
+	import iconLink from "@ktibow/iconset-material-symbols/link";
 	import iconCode from "@ktibow/iconset-material-symbols/code";
+	import iconCached from "@ktibow/iconset-material-symbols/cached";
 	import '$lib/assets/m3.css';
 	import {page} from '$app/state';
     import { Button, Card, Icon, NavCMLX, NavCMLXItem } from 'm3-svelte';
+    import { PUBLIC_ENABLE_COMMUNITY_ANALYTICS, PUBLIC_UMAMI_WEBSITE_ID } from '$env/static/public';
 
 	let { children } = $props();
 
 	const pages = [
 		{ href: '/', text: 'Home', icon: iconHome, iconSelected: iconHomeS },
 		{ href: '/user', text: 'User', icon: iconPersonSearch, iconSelected: iconPersonSearchS },
+		{ href: '/invite', text: 'Invite', icon: iconLink, iconSelected: iconLink },
 		{ href: '/self', text: 'You', icon: iconPerson, iconSelected: iconPersonS },
 	];
 </script>
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
+
+	{#if PUBLIC_ENABLE_COMMUNITY_ANALYTICS=='true'}
+		<script defer src="https://cloud.umami.is/script.js" data-website-id="fd20baf5-69fb-483d-9c55-5cfe1ea7712e"></script>
+	{/if}
+	{#if PUBLIC_UMAMI_WEBSITE_ID}
+		<script defer src="https://cloud.umami.is/script.js" data-website-id={PUBLIC_UMAMI_WEBSITE_ID}></script>
+	{/if}
 </svelte:head>
 
 {#snippet nav()}
@@ -48,8 +59,21 @@
 			Not affiliated with, endorsed, sponsored, or specifically approved by Discord Inc. All Discord logos and trademarks are property of Discord Inc.
 		</p>
 		<div class="centered-row">
-			<Button href="https://github.com/NotPiny/Discorver" variant="tonal">
-				<Icon icon={iconCode} />
+			<Button href="https://github.com/DiscorverTool/Discorver" variant="tonal">
+				<Icon icon={iconCode} name="Source Code" />
+			</Button>
+			<Button onclick={() => {
+				if (confirm(`Clearing the cache will ensure up-to-date information is fetched, but may increase load times for certain requests. Are you sure you want to clear the cache?`)) {
+					const cachePrefixes = [ 'fetchCache' ]
+					for (let i = 0; i < sessionStorage.length; i++) {
+						const key = sessionStorage.key(i);
+						if (key && cachePrefixes.some(prefix => key.startsWith(prefix))) {
+							sessionStorage.removeItem(key);
+						}
+					}
+				}
+			}} variant="tonal">
+				<Icon icon={iconCached} name="Clear Cache" />
 			</Button>
 		</div>
 	</Card>

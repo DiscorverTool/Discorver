@@ -75,6 +75,11 @@
             Other: {guilds.filter(g => !(g.owner) && !(BigInt(g.permissions) & BigInt(0x8)) && !(BigInt(g.permissions) & BigInt(0x20))).length} ({((guilds.filter(g => !(g.owner) && !(BigInt(g.permissions) & BigInt(0x8)) && !(BigInt(g.permissions) & BigInt(0x20))).length / guilds.length) * 100).toFixed(1)}%)
         </p>
     </center><br/>
+    {#if loading}
+        <center>
+            <LoadingIndicator />
+        </center>
+    {/if}
     <div class="guilds-list">
         {#each guilds as guild}
             <div class="guild-card">
