@@ -1,4 +1,4 @@
-![Discorver Logo](/src/lib/assets/wordmark.svg)
+![Discorver Logo](/src/lib/assets/wordmark.svg)<br/>
 Discorver is a self-hosted utility for discovering information on certain users or guilds on Discord. It provides a simple interface to search through Discord's public API and retrieve relevant data.
 
 ## Features
@@ -11,7 +11,7 @@ This project is licensed under the Opinionated Queer License v1.2. See the [LICE
 
 ## Setup & Self-Hosting
 ### Vercel Deployment
-The easiest way to deploy Discorver is through Vercel. Simply click the button below to get started:
+The easiest way to deploy Discorver is through Vercel. Simply click the button below to get started:<br/>
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FDiscorverTool%2FDiscorver&env=DISCORD_TOKEN,PUBLIC_OAUTH_URL,PUBLIC_ENABLE_COMMUNITY_ANALYTICS,PUBLIC_UMAMI_WEBSITE_ID,PUBLIC_GITHUB_URL&envDescription=Discord%20bot%20token,%20OAuth%20URL,%20and%20analytics%20configuration&envLink=https%3A%2F%2Fdiscord.com%2Fdevelopers%2Fdocs%2Fquick-start%2Fgetting-started&project-name=discorver&repository-name=discorver)
 
 ### Other Hosting Platforms
