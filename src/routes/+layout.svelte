@@ -6,6 +6,7 @@
 	import iconPersonS from "@ktibow/iconset-material-symbols/person";
 	import iconPersonSearch from "@ktibow/iconset-material-symbols/person-search-outline";
 	import iconPersonSearchS from "@ktibow/iconset-material-symbols/person-search";
+	import iconStorage from "@ktibow/iconset-material-symbols/storage";
 	import iconLink from "@ktibow/iconset-material-symbols/link";
 	import iconCode from "@ktibow/iconset-material-symbols/code";
 	import iconCached from "@ktibow/iconset-material-symbols/cached";
@@ -19,6 +20,7 @@
 	const pages = [
 		{ href: '/', text: 'Home', icon: iconHome, iconSelected: iconHomeS },
 		{ href: '/user', text: 'User', icon: iconPersonSearch, iconSelected: iconPersonSearchS },
+		{ href: '/guild', text: 'Guild', icon: iconStorage, iconSelected: iconStorage }, // Can these get filled icons? 😭
 		{ href: '/invite', text: 'Invite', icon: iconLink, iconSelected: iconLink },
 		{ href: '/self', text: 'You', icon: iconPerson, iconSelected: iconPersonS },
 	];
@@ -28,10 +30,10 @@
 	<link rel="icon" href={favicon} />
 
 	{#if PUBLIC_ENABLE_COMMUNITY_ANALYTICS=='true'}
-		<script defer src="https://cloud.umami.is/script.js" data-website-id="fd20baf5-69fb-483d-9c55-5cfe1ea7712e"></script>
+		<script defer data-cfasync="false" src="https://cloud.umami.is/script.js" data-website-id="fd20baf5-69fb-483d-9c55-5cfe1ea7712e"></script>
 	{/if}
 	{#if PUBLIC_UMAMI_WEBSITE_ID}
-		<script defer src="https://cloud.umami.is/script.js" data-website-id={PUBLIC_UMAMI_WEBSITE_ID}></script>
+		<script defer data-cfasync="false" src="https://cloud.umami.is/script.js" data-website-id={PUBLIC_UMAMI_WEBSITE_ID}></script>
 	{/if}
 </svelte:head>
 
@@ -87,6 +89,27 @@
 		width: 100%;
 		box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 		background-color: rgb(var(--m3-scheme));
+	}
+
+	@media (max-width: 550px) {
+		.navigation {
+			position: fixed;
+			bottom: 0;
+			top: auto;
+			box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+
+			z-index: 1000;
+		}
+
+		main {
+			margin-top: 0 !important;
+			margin-bottom: 4rem;
+		}
+
+		footer {
+			bottom: 4rem;
+			margin-bottom: 4rem;
+		}
 	}
 
 	main {

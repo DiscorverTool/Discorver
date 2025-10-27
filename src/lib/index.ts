@@ -53,6 +53,28 @@ export async function fetchWithCache(url: string, options: RequestInit = {}, cac
 	});
 }
 
+export function formatText(input: string, humanize: boolean, truncate: number = Infinity) {
+	let output = input;
+
+	function humanizeString(string: string): string {
+        return string
+            .toLowerCase()
+            .split("_")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
+	}
+
+	if (humanize) {
+		output = humanizeString(output);
+	}
+
+	if (truncate < Infinity) {
+		output = output.slice(0, truncate);
+	}
+
+	return output;
+}
+
 /**
  * TAKEN FROM: https://github.com/vegeta897/snow-stamp/blob/main/src/convert.js
  */
