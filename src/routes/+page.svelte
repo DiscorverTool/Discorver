@@ -40,6 +40,11 @@
             "/user"
         )}
         {@render tool(
+            "Guild Lookup",
+            "Get details about a Discord guild using its ID.",
+            "/guild"
+        )}
+        {@render tool(
             "Invite Resolver",
             "Get detailed information about a Discord invite link.",
             "/invite"
