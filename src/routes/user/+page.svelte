@@ -5,6 +5,7 @@
     import UserCard from "./UserCard.svelte";
     import { validateSnowflake } from "$lib";
     import { page } from "$app/state";
+    import { onMount } from "svelte";
 
     let userId = page.url.searchParams.get('id') ?? '';
     let fetching = false;
@@ -44,6 +45,12 @@
                 fetching = false;
             });
     }
+
+    onMount(() => {
+        if (userId) {
+            fetchUser(userId);
+        }
+    });
 </script>
 
 <svelte:head>
