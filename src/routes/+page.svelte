@@ -54,6 +54,11 @@
             "View information (and stats) about your own Discord account.",
             "/self"
         )}
+        {@render tool(
+            "Timestamps",
+            "Convert between Discord snowflakes, Unix timestamps, and human-readable date-times. whilst also providing formatted timestamp outputs for Discord messages.",
+            "/timestamp"
+        )}
     </div>
 </center>
 
