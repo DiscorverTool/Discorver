@@ -12,11 +12,12 @@
     import type { User } from "../user/types";
     import { onMount } from "svelte";
 
-    let inviteCode = page.url.searchParams.get("code") || "";
-    let fetching = false;
-    let fetchFailed = false;
-    let fetchError = "";
-    let inviteData: APIInvite | null = null;
+    let inviteCode = $state(page.url.searchParams.get("code") || "");
+    let fetching = $state(false);
+    let fetchFailed = $state(false);
+    let fetchError = $state("");
+    const { data } = $props();
+    let inviteData: APIInvite | null = $state(data.invite || null);
 
     function standardizeInvite(code: string): string {
         // Remove any URL parts if a full URL is provided
@@ -66,7 +67,24 @@
 </script>
 
 <svelte:head>
-    <title>Invite Resolver • Discorver</title>
+    <title>{inviteData ? `${inviteData.type == InviteType.Guild && inviteData.guild ? inviteData.guild.name : inviteData.inviter?.username} • Invite Resolver • Discorver` : 'Invite Resolver • Discorver'}</title>
+    {#if inviteData}
+        {#if inviteData.type == InviteType.Guild && inviteData.guild}
+            <!-- Guild invite embed -->
+            <meta property="og:title" content="{inviteData.guild.name} • Invite Resolver • Discorver" />
+            <meta property="og:description" content="View information about this Discord server using Discorver.\n\nID: {inviteData.guild.id}\nMembers: {Intl.NumberFormat().format(inviteData.approximate_member_count ?? 0)}\nOnline: {Intl.NumberFormat().format(inviteData.approximate_presence_count ?? 0)}\nBoosts: {Intl.NumberFormat().format(inviteData.guild.premium_subscription_count ?? 0)}\n\n{inviteData.guild.description ?? 'No description available.'}" />
+            {#if inviteData.guild.icon}
+                <meta property="og:image" content="https://cdn.discordapp.com/icons/{inviteData.guild.id}/{inviteData.guild.icon}.png?size=512" />
+            {/if}
+        {:else if inviteData.type == InviteType.Friend && inviteData.inviter}
+            <!-- Friend invite embed -->
+            <meta property="og:title" content="{inviteData.inviter.global_name || inviteData.inviter.username} • Invite Resolver • Discorver" />
+            <meta property="og:description" content="Friend invite from Discord user @{inviteData.inviter.username} using Discorver.\n\nID: {inviteData.inviter.id}" />
+            {#if inviteData.inviter.avatar}
+                <meta property="og:image" content="https://cdn.discordapp.com/avatars/{inviteData.inviter.id}/{inviteData.inviter.avatar}.png" />
+            {/if}
+        {/if}
+    {/if}
 </svelte:head>
 
 <h1>Invite Resolver</h1>

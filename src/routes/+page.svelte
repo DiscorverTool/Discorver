@@ -7,6 +7,11 @@
     <title>
         Discorver
     </title>
+
+    <meta property="og:title" content="Discorver" />
+    <meta property="og:description" content="Discorver is a simple tool that helps find information from the Discord API quickly and cleanly." />
+    
+    <meta name="theme-color" content="#508fee" />
 </svelte:head>
 
 <center>

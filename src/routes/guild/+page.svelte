@@ -9,12 +9,13 @@
     import UserCard from "../user/UserCard.svelte";
     import type { User } from "../user/types";
 
-    let guildId = page.url.searchParams.get("id") || "";
-    let guild: WidgetResult | null = null;
-    let inviteData: APIInvite | null = null;
-    let fetching = false;
-    let fetchFailed = false;
-    let fetchError = "";
+    const { data } = $props();
+    let guildId = $state(page.url.searchParams.get("id") || "");
+    let guild: WidgetResult | null = $state(data.guild || null);
+    let inviteData: APIInvite | null = $state(data.inviteData || null);
+    let fetching = $state(false);
+    let fetchFailed = $state(false);
+    let fetchError = $state("");
 
     async function fetchWidget(): Promise<WidgetResult | null> {
         const response = await fetchWithCache(
@@ -83,6 +84,24 @@
             .join(" ");
     }
 </script>
+
+<svelte:head>
+    <title>{guild ? `${guild.name} • Guild Lookup • Discorver` : 'Guild Lookup • Discorver'}</title>
+    {#if guild}
+        <!-- Guild widget embed -->
+        <meta property="og:title" content="{guild.name} • Guild Lookup • Discorver" />
+        <meta property="og:description" content="View information about this Discord server using Discorver.\n\nID: {guild.id}\n{inviteData ? `Members: ${Intl.NumberFormat().format(inviteData.approximate_member_count ?? 0)}\nOnline: ${Intl.NumberFormat().format(inviteData.approximate_presence_count ?? 0)}\nBoosts: ${Intl.NumberFormat().format(inviteData.guild?.premium_subscription_count ?? 0)}` : `Members: ${guild.members.length} (shown in widget)`}\n\nInvite: {guild.instant_invite ?? 'None'}" />
+        {#if inviteData?.guild?.icon}
+            <meta property="og:image" content="https://cdn.discordapp.com/icons/{guild.id}/{inviteData.guild.icon}.png?size=512" />
+        {:else if inviteData?.guild?.id}
+            <!-- Fallback if icon exists but we don't have the hash -->
+            <meta property="og:image" content="https://cdn.discordapp.com/embed/avatars/0.png" />
+        {/if}
+        {#if inviteData?.guild?.description}
+            <meta property="og:site_name" content="{inviteData.guild.description}" />
+        {/if}
+    {/if}
+</svelte:head>
 
 <h1>Guild Lookup</h1>
 <center>

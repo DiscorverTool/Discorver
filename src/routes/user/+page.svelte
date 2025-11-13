@@ -3,15 +3,18 @@
     import iconSearch from "@ktibow/iconset-material-symbols/search";
     import { type User } from "./types";
     import UserCard from "./UserCard.svelte";
-    import { validateSnowflake } from "$lib";
+    import { convertSnowflakeToDate, validateSnowflake } from "$lib";
     import { page } from "$app/state";
     import { onMount } from "svelte";
 
-    let userId = page.url.searchParams.get('id') ?? '';
-    let fetching = false;
-    let fetchFailed = false;
-    let fetchError = '';
-    let user: User | null = null;
+    // I love runes :) [Not really]
+    let userId = $state(page.url.searchParams.get('id') ?? '');
+    let fetching = $state(false);
+    let fetchFailed = $state(false);
+    let fetchError = $state('');
+    let { data } = $props();
+    let user = $state<User | null>(data.user || null);
+
 
     function fetchUser(id: string) {
         try {
@@ -55,6 +58,17 @@
 
 <svelte:head>
     <title>{user ? `${user.global_name} • User Lookup • Discorver` : 'User Lookup • Discorver'}</title>
+    {#if user}
+        <!-- Preview embed data -->
+        <meta property="og:title" content="{user.global_name} • User Lookup • Discorver" />
+        <meta property="og:description" content="Find out more about Discord user @{user.username} using Discorver.\n\nID: {user.id}\nCreated: {convertSnowflakeToDate(user.id).toISOString()}\nBot: {user.bot ? 'Yes' : 'No'}\n\nBanner Colour: {user.banner_color ?? 'Unknown'}\nAccent Colour: #{user.accent_color ? user.accent_color.toString(16).padStart(6, '0') : 'Unknown'}" />
+        {#if user.accent_color || user.banner_color}
+            <meta name="theme-color" content="{user.accent_color ? `#${user.accent_color.toString(16).padStart(6, '0')}` : user.banner_color}" />
+        {/if}
+        {#if user.avatar}
+            <meta property="og:image" content="https://cdn.discordapp.com/avatars/{user.id}/{user.avatar}.png" />
+        {/if}
+    {/if}
 </svelte:head>
 
 <h1>

@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { page } from "$app/state";
+
     let date: string = ``;
     let ts = 0;
 
@@ -124,7 +126,53 @@
             return `${prefix}${minutes == 1 ? "a" : minutes} minute${minutes > 1 ? "s" : ""}${postfix}`;
         return `${prefix}${seconds} seconds${postfix}`; // Discord uses "seconds" even for 1 second
     }
+
+    /**
+     * Parse time parameter - accepts unix timestamps (seconds or ms) or date strings
+     */
+    function parseTimeParam(timeParam: string): { date: Date; timestamp: number } | null {
+        if (!timeParam) return null;
+
+        // Try parsing as a number first (unix timestamp)
+        const numericValue = Number(timeParam);
+        if (!isNaN(numericValue)) {
+            // If it's a reasonable unix timestamp in seconds (between 1970 and 2100)
+            if (numericValue > 0 && numericValue < 4102444800) {
+                const date = new Date(numericValue * 1000);
+                return { date, timestamp: numericValue };
+            }
+            // If it's in milliseconds (13 digits)
+            if (numericValue > 1000000000000) {
+                const date = new Date(numericValue);
+                return { date, timestamp: Math.floor(numericValue / 1000) };
+            }
+        }
+
+        // Try parsing as a date string
+        const date = new Date(timeParam);
+        if (!isNaN(date.getTime())) {
+            return { date, timestamp: Math.floor(date.getTime() / 1000) };
+        }
+
+        return null;
+    }
 </script>
+
+<svelte:head>
+    <title>Timestamps • Discorver</title>
+    {#if page.url.searchParams.get('time')}
+        {@const timeParam = page.url.searchParams.get('time')}
+        {@const parsed = parseTimeParam(timeParam || '')}
+        {#if parsed}
+            {@const { date: timestampDate, timestamp } = parsed}
+            {@const formattedTimestamps = Object.entries(typeFormats).map(([type, options]) => {
+                return `${letterNameMappings[type as keyof typeof letterNameMappings]}: <t:${timestamp}:${type}>`;
+            }).join('\n')}
+            <meta property="og:title" content="Timestamps • Discorver" />
+            <meta property="og:description" content="Formatted timestamps for input time:{'\n'}{formattedTimestamps}" />
+        {/if}
+    {/if}
+</svelte:head>
 
 <h1>Timestamps</h1>
 <div class="touching-column">

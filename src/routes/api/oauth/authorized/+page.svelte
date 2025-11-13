@@ -28,5 +28,7 @@
         window.location.href = referrer.toString();
     });
 </script>
-
+<svelte:head>
+    <title>Authorizing... • Discorver</title>
+</svelte:head>
 <h1>Authorizing...</h1>
